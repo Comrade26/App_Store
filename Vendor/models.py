@@ -5,7 +5,7 @@ class Product(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)  #Product Owner
     name = models.CharField(max_length=255) #Product Name
     price = models.DecimalField(max_digits=10, decimal_places=2) #Product Price
-    image = models.ImageField(upload_to='products/') #Product Image
+    image = models.ImageField(upload_to='images/') #Product Image
     description = models.TextField() #Product Description
     current_available_amount = models.PositiveIntegerField() #Product Current Amount
     category = models.CharField(max_length=255) #Product Category
