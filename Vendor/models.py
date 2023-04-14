@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 class Product(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)  #Product Owner
