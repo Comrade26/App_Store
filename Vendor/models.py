@@ -15,4 +15,4 @@ class Product(models.Model):
     is_featured = models.BooleanField(default=False) #Product Best sellers
 
     def __str__(self):
-        return self.name
+        return self.name    
