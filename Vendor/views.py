@@ -2,9 +2,10 @@
 
 # Create your views here.
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from .models import Category, Product
 
 def vendor_login(request):
     if request.method == 'POST':
@@ -34,3 +35,14 @@ def vendor_signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'vendor/signup.html', {'form': form})
+
+def product_list(request):
+    categories = Category.objects.all()
+    products = Product.objects.all()
+    context = {
+        'categories': categories,
+        'products': products,
+    }
+    return render(request, 'product_list.html', context)
+
+
