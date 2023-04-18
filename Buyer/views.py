@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
 from .models import Customer
 from django.shortcuts import render, redirect
-from .forms import BuyerLoginForm
+# from .forms import BuyerLoginForm
 
 # Create your views here.
 # def register(request):

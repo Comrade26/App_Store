@@ -1,11 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.validators import RegexValidator
 
 # Create your models here.
 class Vendor(models.Model):
     store_name = models.CharField(max_length=50, null=False)
-    user = models.OneToOneField(User, null=False, blank=True, on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=True, on_delete=models.CASCADE, default=None)
     first_name = models.CharField(max_length=50, null=False)
     last_name = models.CharField(max_length=50, null=False)
     phone = models.CharField(max_length=10, null=False, unique=True, default='0000000000', validators=[
@@ -33,7 +33,7 @@ class Vendor(models.Model):
         return self.store_name
 
 class Product(models.Model):
-        vendor = models.ForeignKey(User, on_delete=models.CASCADE)  #Product Owner
+        vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)  #Product Owner
         name = models.CharField(max_length=255) #Product Name
         price = models.DecimalField(max_digits=10, decimal_places=2) #Product Price
         image = models.ImageField(upload_to='images/') #Product Image

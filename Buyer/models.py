@@ -1,14 +1,15 @@
 from django.db import models
-# from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.validators import RegexValidator
 
 # Create your models here.
 
 class Customer(models.Model):
-    username = models.CharField(max_length=200, null=False)
+    # username = models.CharField(max_length=200, null=False)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=True, on_delete=models.CASCADE, default=None)
     first_name = models.CharField(max_length=200, null=False, default='fname')
     last_name = models.CharField(max_length=200, null=False, default='lname')
-    password = models.CharField(max_length=100)
+    # password = models.CharField(max_length=100)
     telephone = models.CharField(max_length=10, null=False, unique=True, default='0000000000', validators=[
         RegexValidator(
             regex=r'^0\d{9}$',
