@@ -9,5 +9,5 @@ app_name = 'vendor'
 urlpatterns = [
     path('login/', views.vendor_login, name='vendor_login'),
     path('signup/', views.vendor_signup, name='vendor_signup'),
-    path('product_list/', views.product_list, name='product_list'),
+    # path('product_list/', views.product_list, name='product_list'),
 ]

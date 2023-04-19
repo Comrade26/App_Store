@@ -21,7 +21,7 @@ def vendor_login(request):
         else:
             return render(request, 'vendor/login.html', {'error_message': 'Invalid login credentials.'})
     else:
-        return render(request, 'vendor/login.html')
+        return render(request, 'login.html')
 
 def vendor_signup(request):
     if request.method == 'POST':
@@ -34,15 +34,15 @@ def vendor_signup(request):
             return redirect('vendor_dashboard')
     else:
         form = UserCreationForm()
-    return render(request, 'vendor/signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
 
-def product_list(request):
-    categories = Category.objects.all()
-    products = Product.objects.all()
-    context = {
-        'categories': categories,
-        'products': products,
-    }
-    return render(request, 'product_list.html', context)
+# def product_list(request):
+#     categories = Category.objects.all()
+#     products = Product.objects.all()
+#     context = {
+#         'categories': categories,
+#         'products': products,
+#     }
+#     return render(request, 'product_list.html', context)
 
 

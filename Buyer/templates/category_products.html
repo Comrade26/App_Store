@@ -1,0 +1,12 @@
+{% for category, products in category_product_map.items %}
+    <h1>{{ category }}</h1>
+    <ul>
+    {% for product in products %}
+        <li>{{ product.name }} - {{ product.price }}</li>
+        <li>{{ product.image }}</li>
+        <li>{{ product.vendor.store_name }} - {{ product.vendor.location }}</li>
+    {% empty %}
+        <li>No products in this category.</li>
+    {% endfor %}
+    </ul>
+{% endfor %}

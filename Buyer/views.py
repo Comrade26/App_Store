@@ -5,9 +5,34 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
 from .models import Customer
 from django.shortcuts import render, redirect
-# from .forms import BuyerLoginForm
+from Vendor.models import Product, Category
+from django.views.generic import ListView
 
 # Create your views here.
+def category_products(request):
+    categories = Category.objects.all()
+    category_product_map = {}
+    for category in categories:
+        products = Product.objects.filter(category=category)
+        category_product_map[category.name] = products
+    return render(request, 'category_products.html', {'category_product_map': category_product_map})
+
+class ProductCategoryView(ListView):
+    template_name = 'products_by_category.html'  # the template to use
+    context_object_name = 'products'  # the name of the queryset in the template
+    paginate_by = 10  # the number of items to display per page
+
+    def get_queryset(self):
+        # retrieve the category slug from the URL
+        category_name = self.kwargs.get('category_name', None)
+        
+        # retrieve the category object using the slug
+        category = Category.objects.get(name=category_name)
+
+        # filter the products by the category
+        queryset = Product.objects.filter(category=category)
+
+        return queryset
 # def register(request):
 #     if request.method == 'POST':
 #         form = UserCreationForm(request.POST)
