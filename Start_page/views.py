@@ -5,3 +5,7 @@ from django.views import View
 class Homepage(View):
     def get(self, request):
         return render(request, "homepage.html", {})
+    
+class Index(View):
+    def get(self, request):
+        return render(request, "index.html", {})

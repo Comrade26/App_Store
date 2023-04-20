@@ -21,6 +21,7 @@ from . import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('Start_page.urls')),
+    # path('', include('Start_page.urls')),
     path('vendor/', include('Vendor.urls')),
     path('buyer/', include('Buyer.urls'))
 ]
