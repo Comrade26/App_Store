@@ -35,6 +35,10 @@ class Vendor(models.Model):
 class Category(models.Model):
         name = models.CharField(max_length=255)
 
+        @staticmethod
+        def get_all_categories():
+                return Category.objects.all()
+
         def __str__(self):
                 return self.name 
         
@@ -50,6 +54,21 @@ class Product(models.Model):
         updated_at = models.DateTimeField(auto_now=True) #Product Updated Date
         is_active = models.BooleanField(default=True) #Product Availability
         is_featured = models.BooleanField(default=False) #Product Best sellers
+
+        @staticmethod
+        def get_products_by_id(ids):
+                return Product.objects.filter(id__in=ids)
+
+        @staticmethod
+        def get_all_products():
+                return Product.objects.all()
+
+        @staticmethod
+        def get_all_products_by_categoryid(category_id):
+                if category_id:
+                        return Product.objects.filter(category=category_id)
+                else:
+                        return Product.get_all_products()
 
         def __str__(self):
                 return self.name 
