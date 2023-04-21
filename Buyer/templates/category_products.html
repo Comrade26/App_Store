@@ -24,16 +24,9 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
     crossorigin="anonymous">
-    <link rel="apple-touch-icon" href="templates/assets/img/apple-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="templates/assets/img/favicon.ico">
-    
-    <link rel="stylesheet" href="templates/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="templates/assets/css/templatemo.css">
-    <link rel="stylesheet" href="templates/assets/css/custom.css">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
 
 </head>
 
@@ -152,7 +145,7 @@
                     <div class="col-md-4">
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}">
+                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
                                         <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
@@ -162,16 +155,16 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="shop-single.html" class="h3 text-decoration-none">{{ product.name }}</a>
+                                <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-decoration-none">{{ product.name }}</a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    <li>M/L/X/XL</li>
-                                    <li class="pt-2">
+                                    <!-- <li>M/L/X/XL</li> -->
+                                    <!-- <li class="pt-2">
                                         <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                         <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
                                         <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
                                         <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
                                         <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <ul class="list-unstyled d-flex justify-content-center mb-1">
                                     <li>
