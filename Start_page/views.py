@@ -8,7 +8,7 @@ class Homepage(View):
     
 class Base(View):
     def get(self, request):
-        return render(request, "basebasebase.html", {})
+        return render(request, "start_page_base.html", {})
     
 class Landing_page(View):
     def get(self, request):
