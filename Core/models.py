@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import re
-
 from django.core.exceptions import ValidationError
 
 def chula_email_validator(value):
