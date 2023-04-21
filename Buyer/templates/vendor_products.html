@@ -1,0 +1,107 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zay Shop - Product Listing Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+    crossorigin="anonymous">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+
+</head>
+
+<body>
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-3">
+                {% for vendor in vendors %}
+                    {% for product in products %}
+
+                    {% if vendor.id == product.vendor.id%}
+                        {% if forloop.first %}
+                            <h1 class="h2 pb-4">{{vendor.store_name}}</h1>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                <h1 class="h2 pb-4">Categories</h1>
+                <ul class="list-unstyled templatemo-accordion">
+                    <li class="pb-3">
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="/buyer/category_products/">
+                            All product
+                        </a>
+                        {% for category in categories %}
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="/buyer/category_products/?category={{ category.id }}">
+                            {{ category }}
+                        </a>
+                        {% endfor %}
+
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-inline shop-top-menu pb-3 pt-1">
+                        </ul>
+                    </div>
+                    <div class="col-md-6 pb-4">
+                        <div class="d-flex">
+                            <select class="form-control">
+                                <option>Featured</option>
+                                <option>A to Z</option>
+                                <option>Item</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-decoration-none">{{ product.name }}</a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                </ul>
+                                <ul class="list-unstyled d-flex justify-content-center mb-1">
+                                    <li>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
+                                    </li>
+                                </ul>
+                                <p class="text-center mb-0">{{ product.price }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->    
+</body>
+</html>
+{% endblock %}

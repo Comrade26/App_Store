@@ -9,4 +9,6 @@ app_name = 'vendor'
 urlpatterns = [
     path('login/', views.vendor_login, name='vendor_login'),
     path('signup/', views.vendor_signup, name='vendor_signup'),
+    path('my_products/', views.vendor_item, name='my_products'),
+    
 ]
