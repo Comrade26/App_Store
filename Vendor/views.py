@@ -5,7 +5,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-from .models import Category, Product
+from .models import Category, Product, Vendor
 
 def vendor_login(request):
     if request.method == 'POST':
@@ -36,13 +36,21 @@ def vendor_signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
-# def product_list(request):
-#     categories = Category.objects.all()
-#     products = Product.objects.all()
-#     context = {
-#         'categories': categories,
-#         'products': products,
-#     }
-#     return render(request, 'product_list.html', context)
+def vendor_item(request):
+    vendors = Vendor.get_all_vendors()
+    vendorID = request.GET.get("vendor")
+    categories = Category.get_all_categories()
+    categoryID = request.GET.get("category")
+    if categoryID:
+        products = Product.get_all_products_by_categoryid(categoryID)
+    else:
+        products = Product.get_all_products()
+
+    vendor_category_product_map = {}
+    vendor_category_product_map["products"] = products
+    vendor_category_product_map["categories"] = categories
+    vendor_category_product_map["vendors"] = vendors
+
+    return render(request, "my_products.html", vendor_category_product_map)
 
 

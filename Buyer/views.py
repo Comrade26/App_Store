@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login, logout
 from .models import Customer
 from django.shortcuts import render, redirect
-from Vendor.models import Product, Category
+from Vendor.models import Product, Category, Vendor
 from django.views.generic import ListView
 
 # Create your views here.
@@ -31,7 +31,35 @@ def item(request):
     product_map["products"] = products
 
     return render(request, "single_products.html", product_map)
-# def register(request):
+
+def vendor_item(request):
+    vendors = Vendor.get_all_vendors()
+    vendorID = request.GET.get("vendor")
+    if vendorID:
+        products = Product.get_all_products_by_vendorid(vendorID)
+    else:
+        products = Product.get_all_products()
+
+    vendor_product_map = {}
+    vendor_product_map["products"] = products
+    vendor_product_map["vendors"] = vendors
+
+    return render(request, "vendor_products.html", vendor_product_map)
+
+# def vendor_item(request):
+#     vendors = Vendor.get_all_vendors()
+#     vendorID = request.GET.get("vendor")
+#     if vendorID:
+#         products = Product.get_all_products_by_vendorid(vendorID)
+#     else:
+#         products = Product.get_all_products()
+
+#     vendor_product_map = {}
+#     vendor_product_map["products"] = products
+#     vendor_product_map["vendors"] = vendors
+
+#     return render(request, "single_products.html", vendor_product_map)
+
 #     if request.method == 'POST':
 #         form = UserCreationForm(request.POST)
 #         if form.is_valid():

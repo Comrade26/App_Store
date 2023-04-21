@@ -6,29 +6,14 @@ from django.core.validators import RegexValidator
 class Vendor(models.Model):
         store_name = models.CharField(max_length=50, null=False)
         user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=True, on_delete=models.CASCADE, default=None)
-        # first_name = models.CharField(max_length=50, null=False)
-        # last_name = models.CharField(max_length=50, null=False)
-        # phone = models.CharField(max_length=10, null=False, unique=True, default='0000000000', validators=[
-        #     RegexValidator(
-        #         regex=r'^0\d{9}$',
-        #         message='Telephone number must start with 0 and have 10 digits',
-        #         code='invalid_telephone'
-        #     )
-        # ])
-
-        # email = models.CharField(max_length=200, null=False, unique=True, default='vendor_email', validators=[
-        #     RegexValidator(
-        #         regex=r'.+@.+.chula.ac.th',
-        #         message='Email must end with "chula.ac.th"',
-        #         code='invalid_email'
-        #     )
-        # ])
-
         location = models.CharField(max_length=100)
-
         store_picture = models.ImageField(upload_to='images/store_picture/', null=True)
         qr_picture = models.ImageField(upload_to='images/qr_picture/', null=True)
 
+        @staticmethod
+        def get_all_vendors():
+                return Vendor.objects.all()
+                
         def __str__(self):
                 return self.store_name
 
@@ -38,6 +23,13 @@ class Category(models.Model):
         @staticmethod
         def get_all_categories():
                 return Category.objects.all()
+        
+        @staticmethod
+        def get_all_categories_by_vendorid(vendor_id):
+                if vendor_id:
+                        return Category.objects.filter(vendor=vendor_id)
+                else:
+                        return Category.get_all_categories()
 
         def __str__(self):
                 return self.name 
@@ -69,6 +61,14 @@ class Product(models.Model):
                         return Product.objects.filter(category=category_id)
                 else:
                         return Product.get_all_products()
-
+                
+        @staticmethod
+        def get_all_products_by_vendorid(vendor_id):
+                if vendor_id:
+                        return Product.objects.filter(vendor=vendor_id)
+                else:
+                        return Product.get_all_products()
+                
+        
         def __str__(self):
                 return self.name 
