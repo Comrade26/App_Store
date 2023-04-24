@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'Buyer_base.html' %}
 
-<head>
-    <title>Zay Shop - Product Listing Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="stylesheet" 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
-    crossorigin="anonymous">
-
-    <!-- Load fonts style after rendering the layout styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-
-</head>
-
-
-<body>
+{% block content %}
     <!-- Open Content -->
     <section class="bg-light">
         <div class="container pb-5">
@@ -33,7 +16,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2">{{ product.name }}</h1>
-                            <p class="h3 py-2">{{ product.price }}</p>
+                            <p class="h3 py-2">{{ product.price }} Baht</p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>Store:</h6>
@@ -85,7 +68,4 @@
         </div>
     </section>
     <!-- Close Content -->
-
-</body>
-
-</html>
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends 'login_nav.html' %}
+
+{% block content %}
+
 <h1>Login</h1>
 <form method="post">
     {% csrf_token %}
@@ -6,18 +10,4 @@
     <a href="{% url 'Core:register' %}" class="register-btn">Register</a>
 </form>
 
-<style>
-    .register-btn, .login-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border-radius: 5px;
-        text-decoration: none;
-        margin-left: 10px;
-    }
-
-    .register-btn:hover, .login-btn {
-        background-color: #0069d9;
-    }
-</style>
+{% endblock %}
