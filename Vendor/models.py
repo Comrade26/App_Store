@@ -44,8 +44,6 @@ class Product(models.Model):
         category = models.ForeignKey(Category, on_delete=models.CASCADE) #Product Category
         created_at = models.DateTimeField(auto_now_add=True) #Product Created Date
         updated_at = models.DateTimeField(auto_now=True) #Product Updated Date
-        is_active = models.BooleanField(default=True) #Product Availability
-        is_featured = models.BooleanField(default=False) #Product Best sellers
 
         @staticmethod
         def get_products_by_id(ids):
