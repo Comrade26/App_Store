@@ -13,7 +13,7 @@ def chula_email_validator(value):
 # Create your models here.
 class User(AbstractUser):
     email = models.EmailField(unique=True,validators=[chula_email_validator])
-    telephone = models.CharField(max_length=10, null=False, unique=True, default='0000000000', validators=[
+    telephone = models.CharField(max_length=10, null=False, unique=True, validators=[
         RegexValidator(
             regex=r'^0\d{9}$',
             message='Telephone number must start with 0 and have 10 digits',
