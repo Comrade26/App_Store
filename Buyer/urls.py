@@ -1,11 +1,9 @@
 from django.urls import path
-from .views import BuyerLoginView
 from . import views
 
 app_name = 'Buyer'
 
 urlpatterns = [
-    path('login/', BuyerLoginView.as_view(), name='login'),
     # path('buyer/signup/', views.buyer_signup, name='buyer_signup'),
     # path('buyer/login/', views.buyer_login, name='buyer_login'),
     # path('buyer/profile/', views.buyer_profile, name='buyer_profile'),
