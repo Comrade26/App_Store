@@ -5,6 +5,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from .forms import VendorRegistrationForm
 from .models import Category, Product, Vendor
 
 def vendor_login(request):
@@ -53,4 +54,23 @@ def vendor_item(request):
 
     return render(request, "my_products.html", vendor_category_product_map)
 
+def vendor_register(request):
+    if request.method == 'POST':
+        form = VendorRegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save()
+            vendor = Vendor.objects.create(
+                user=user,
+                store_name=form.cleaned_data['store_name'],
+                location=form.cleaned_data['location'],
+                store_picture=form.cleaned_data.get('store_picture')
+            )
+            # Redirect to the vendor's profile page
+            return redirect('vendor_profile')
+    else:
+        form = VendorRegistrationForm()
+    return render(request, 'Vendor/register.html', {'form': form})
 
+def vendor_profile(request):
+    vendor = Vendor.objects.get(user=request.user)
+    return render(request, 'Vendor/profile.html', {'vendor': vendor})
