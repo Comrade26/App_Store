@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
-from .views import Index ,store, Single_Index,single_store
-
+from .views import Index ,store, Single_Index,single_store,Cart
+from .middlewares.auth import auth_middleware
 
 app_name = 'Buyer'
 
@@ -19,6 +19,7 @@ urlpatterns = [
 
     path('', Single_Index.as_view(), name='singlehomepage'),
     path('single_products/', single_store , name='singlestore'),
+    path('cart', auth_middleware(Cart.as_view()) , name='cart'),
 
 
 ]
