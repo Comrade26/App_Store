@@ -98,6 +98,11 @@
                       <i class="bi bi-basket2-fill"></i>
                       <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">0</span>
                   </a>
+
+                    <a class="nav-link" href="/cart">Cart 
+                      <span class="badge badge-info">{{request.session.cart.keys|length}}</span>
+                      <span class="sr-only">(current)</span></a>
+
               </div>
 
               <div class="btn-group">
