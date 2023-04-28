@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import RegexValidator
+from Core.models import User
 
 # Create your models here.
 class Vendor(models.Model):
@@ -10,6 +11,10 @@ class Vendor(models.Model):
         store_picture = models.ImageField(upload_to='images/store_picture/', null=True)
         qr_picture = models.ImageField(upload_to='images/qr_picture/', null=True)
 
+        @staticmethod
+        def get_vendors_by_id(ids):
+                return Vendor.objects.filter(id__in=ids)
+        
         @staticmethod
         def get_all_vendors():
                 return Vendor.objects.all()
