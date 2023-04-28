@@ -13,11 +13,11 @@
                 <h1 class="h2 pb-4">Categories</h1>
                 <ul class="list-unstyled templatemo-accordion">
                     <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="/buyer/category_products/">
+                        <a class="collapsed d-flex justify-content-between h3 text-success text-decoration-none" href="/buyer/category_products/">
                             All product
                         </a>
                         {% for category in categories %}
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="/buyer/category_products/?category={{ category.id }}">
+                        <a class="collapsed d-flex justify-content-between h3 text-success text-decoration-none" href="/buyer/category_products/?category={{ category.id }}">
                             {{ category }}
                         </a>
                         {% endfor %}
@@ -50,10 +50,10 @@
                                 
                             </div>
                             <div class="card-body">
-                                <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-decoration-none">{{ product.name }}</a>
+                                <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-success text-decoration-none">{{ product.name }}</a>
 
                                 
-                                <p class="text-center mb-0">{{ product.price }} Baht</p>
+                                <p class="card-text">{{ product.price }} Baht</p>
 
                                 
                                 <div class="card-footer p-0 no-gutters">
