@@ -42,9 +42,9 @@
                 <div class="row">
                     {% for product in products %}
                     <div class="col-md-4">
-                        <div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
+                        <div class="card mx-auto mb-3" id={{product.id}}>
                             <div class="card rounded-3">
-                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" width="500" height="500" alt="Card image cap">
+                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
                                 
                             </div>
                             <div class="card-body">
