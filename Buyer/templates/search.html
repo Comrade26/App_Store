@@ -5,29 +5,28 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-3">
-                {% for vendor in vendors %}
-                    {% for product in products %}
-
-                    {% if vendor.id == product.vendor.id%}
-                        {% if forloop.first %}
-                            <h1 class="h2 pb-4">{{vendor.store_name}}</h1>
-                        {% endif %}
-                    {% endif %}
-                    {% endfor %}
-                {% endfor %}
-
+                <h2 class="h2 pb-4 text-success"><span class="text-muted">Search result for </span> {{request.GET.q}}</h2>
+                
             </div>
-            
+                        
             <div class="col-lg-9">
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="list-inline shop-top-menu pb-3 pt-1">
+                            <form class="form-inline my-2 my-lg-0" action="/buyer/search">
+                                <div class="input-group">
+                                    <input name="q" type="text" class="form-control" placeholder="Search" >
+                                    <div class="input-group-append">
+                                        <button class="btn btn-dark" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
                         </ul>
                     </div>
                     
                 </div>
                 <div class="row">
-                    {% for product in products %}
+                    {% for product in data %}
                     <div class="col-md-4">
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">

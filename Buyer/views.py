@@ -26,47 +26,6 @@ def vendor_item(request):
 
     return render(request, "vendor_products.html", vendor_product_map)
 
-
-
-    
-# def homePage(request):
-#     if request.method == 'POST':
-#         product = request.POST.get('product')
-#         remove = request.POST.get('remove')
-#         cart = request.session.get('cart', {}) 
-#         # cart = request.session.get('cart')
-#         if cart:
-#             quantity = cart.get(product)
-#             if quantity:
-#                 if remove:
-#                     if quantity <= 1:
-#                         cart.pop(product)
-#                     else:
-#                         cart[product] = quantity - 1
-#                 else:
-#                     cart[product] = quantity + 1
-#             else:
-#                 cart[product] = 1
-#         else:
-#             cart = {}
-#             cart[product] = 1
-
-#         request.session['cart'] = cart
-#         print(request.session['cart'])
-#         return redirect('single_product')
-
-#     else:
-#         products = None
-#         categories = Category.objects.all()
-#         category_id = request.GET.get('category')
-#         if category_id:
-#             products = Product.objects.filter(category=category_id)
-#         else:
-#             products = Product.objects.filter(category=1)
-#         context = {'products': products, 'categories': categories}
-#         print("Your Email Address is: ", request.session.get('email'))
-#         return render(request, 'buyer/single_product.html', context)
-
 def store(request):
     cart = request.session.get("cart")
     if not cart:
@@ -120,25 +79,6 @@ class Index(View):
         # return HttpResponseRedirect(f'/store{request.get_full_path()[1:]}')
         return HttpResponseRedirect(f'category_products'+f"{request.get_full_path().split('buyer/')[1]}")
 
-# def store(request):
-#     cart = request.session.get('cart')
-#     if not cart:
-#         request.session['cart'] = {}
-#     products = None
-#     categories = Category.get_all_categories()
-#     categoryID = request.GET.get('category')
-#     if categoryID:
-#         products = Product.get_all_products_by_categoryid(categoryID)
-#     else:
-#         products = Product.get_all_products();
-
-#     data = {}
-#     data['products'] = products
-#     data['categories'] = categories
-
-#     print('you are : ', request.session.get('email'))
-#     return render(request, 'index.html', data)
-
 class Cart(View):
     def get(self , request):
         ids = list(request.session.get('cart').keys())
@@ -147,30 +87,6 @@ class Cart(View):
         return render(request , 'cart.html' , {'products' : products} )
     
 
-def store(request):
-    cart = request.session.get("cart")
-    if not cart:
-        request.session["cart"] = {}
-    products = None
-    categories = Category.get_all_categories()
-    categoryID = request.GET.get("category")
-    if categoryID:
-        products = Product.get_all_products_by_categoryid(categoryID)
-    else:
-        products = Product.get_all_products()
-
-    data = {}
-    data["products"] = products
-    data["categories"] = categories
-
-    return render(request, "category_products.html", data)
-    
-
-
-
-
-
-# Create your views here.
 class Single_Index(View):
 
     def post(self , request):
@@ -217,4 +133,9 @@ def single_store(request):
     product_map["products"] = products
 
     return render(request, "single_products.html", product_map)
+
+def search(request):
+    q=request.GET['q']
+    data=Product.objects.filter(name__icontains=q)
+    return render(request, 'search.html', {'data':data})
 
