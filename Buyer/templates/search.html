@@ -1,0 +1,68 @@
+{% extends 'Buyer_base.html' %}
+
+{% block content %}
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-3">
+                <h2 class="h2 pb-4 text-success"><span class="text-muted">Search result for </span> {{request.GET.q}}</h2>
+                
+            </div>
+                        
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-inline shop-top-menu pb-3 pt-1">
+                            <form class="form-inline my-2 my-lg-0" action="/buyer/search">
+                                <div class="input-group">
+                                    <input name="q" type="text" class="form-control" placeholder="Search" >
+                                    <div class="input-group-append">
+                                        <button class="btn btn-dark" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 pb-4">
+                        <div class="d-flex">
+                            <select class="form-control">
+                                <option>Featured</option>
+                                <option>A to Z</option>
+                                <option>Item</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for product in data %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
+                                
+                            </div>
+                            <div class="card-body">
+                                <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-success text-decoration-none">{{ product.name }}</a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                </ul>
+                                
+                                <p class="card-text">{{ product.price }} Baht</p>
+                            </div>
+
+                            <div class="card-footer p-0 no-gutters">
+                                {% if product.current_available_amount <= 0 %}
+                                    <h4 class="btn btn-block btn-warning" > Out of stock </h4>
+                                    {% else %}
+                                        <h4 class="btn btn-block btn-success" > Available </h4>
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->    
+
+{% endblock %}

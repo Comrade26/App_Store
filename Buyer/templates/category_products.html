@@ -1,4 +1,3 @@
-
 {% extends 'Buyer_base.html' %}
 
 {% block content %}
@@ -29,6 +28,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="list-inline shop-top-menu pb-3 pt-1">
+                            <form class="form-inline my-2 my-lg-0" action="/buyer/search">
+                                <div class="input-group">
+                                    <input name="q" type="text" class="form-control" placeholder="Search" >
+                                    <div class="input-group-append">
+                                        <button class="btn btn-dark" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
                         </ul>
                     </div>
                     <div class="col-md-6 pb-4">
@@ -51,10 +58,8 @@
                             </div>
                             <div class="card-body">
                                 <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-success text-decoration-none ">{{ product.name }}</a>
-
                                 
                                 <p class="card-text">{{ product.price }} Baht</p>
-
                                 
                                 <div class="card-footer p-0 no-gutters">
                                     {% if product.current_available_amount <= 0 %}
@@ -84,18 +89,12 @@
                                             </form>
                                             {% endif %}
                                         {% endif %}
-            
                                 </div>
-
                             </div>
-
-                            
-
                         </div>
                     </div>
                     {% endfor %}
             </div>
-
         </div>
     </div>
     <!-- End Content -->    
