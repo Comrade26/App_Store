@@ -2,39 +2,11 @@
 
 # Create your views here.
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from .models import Category, Product, Vendor
-
-def vendor_login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.is_vendor:
-                login(request, user)
-                return redirect('vendor_dashboard')
-            else:
-                return render(request, 'vendor/login.html', {'error_message': 'You are not a vendor.'})
-        else:
-            return render(request, 'vendor/login.html', {'error_message': 'Invalid login credentials.'})
-    else:
-        return render(request, 'login.html')
-
-def vendor_signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_vendor = True
-            user.save()
-            login(request, user)
-            return redirect('vendor_dashboard')
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+from django.contrib import messages
+from .forms import VendorForm
 
 def vendor_item(request):
     vendors = Vendor.get_all_vendors()
@@ -53,4 +25,16 @@ def vendor_item(request):
 
     return render(request, "my_products.html", vendor_category_product_map)
 
-
+@login_required
+def vendor_register(request):
+    if request.method == 'POST':
+        form = VendorForm(request.POST, request.FILES)
+        if form.is_valid():
+            vendor = form.save(commit=False)
+            vendor.user = request.user
+            vendor.save()
+            messages.success(request, 'Your vendor account has been created!')
+            return redirect('vendor:my_products')
+    else:
+        form = VendorForm()
+    return render(request, 'vendor_registration.html', {'form': form})

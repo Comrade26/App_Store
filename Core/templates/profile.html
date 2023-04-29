@@ -1,0 +1,9 @@
+<h1>Profile</h1>
+
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Telephone: {{ user.telephone }}</p>
+<p>Address: {{ user.address }}</p>
+
+<a href="{% url 'Core:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+<a href="{% url 'Core:change_password' %}" class="btn btn-primary">Change Password</a>
