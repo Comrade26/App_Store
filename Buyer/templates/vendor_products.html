@@ -49,6 +49,15 @@
                                 
                                 <p class="card-text">{{ product.price }} Baht</p>
                             </div>
+
+                            <div class="card-footer p-0 no-gutters">
+                                {% if product.current_available_amount <= 0 %}
+                                    <h4 class="btn btn-block btn-warning" > Out of stock </h4>
+                                    {% else %}
+                                        <h4 class="btn btn-block btn-success" > Available </h4>
+                                    {% endif %}
+                            </div>
+
                         </div>
                     </div>
                     {% endfor %}
