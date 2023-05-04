@@ -7,13 +7,15 @@
             <div class="col-lg-3">
                 {% for vendor in vendors %}
                     {% for product in products %}
-                        {% if vendor.id == product.vendor.id %}
-                            {% if forloop.first %}
-                                <h1 class="h2 pb-4">{{vendor.store_name}}</h1>
-                            {% endif %}
+
+                    {% if vendor.id == product.vendor.id%}
+                        {% if forloop.first %}
+                            <h1 class="h2 pb-4">{{vendor.store_name}}</h1>
                         {% endif %}
+                    {% endif %}
                     {% endfor %}
                 {% endfor %}
+
             </div>
             
             <div class="col-lg-9">
@@ -25,49 +27,35 @@
                     
                 </div>
                 <div class="row">
-                    {% if vendor and vendor == request.user.vendor %}
-                        <div class="col-md-4 mb-4">
-                            <a href="{% url 'vendor:add_edit_product' %}" class="btn btn-primary">Add Product</a>
-                        </div>
-                    {% endif %}
                     {% for product in products %}
-                        {% if product.vendor == user.vendor %}
-                            <div class="col-md-4 mb-4">
-                                <a href="{% url 'vendor:edit_product' product.id %}" class="btn btn-secondary">Edit Product</a>
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
+                                
                             </div>
-                            <div class="col-md-4 mb-4">
-                                <form method="post" action="{% url 'vendor:delete_product' product.id %}" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Delete Product</button>
-                                </form>
+                            <div class="card-body">
+                                <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-success text-decoration-none">{{ product.name }}</a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                </ul>
+                                
+                                <p class="card-text">{{ product.price }} Baht</p>
                             </div>
-                        {% endif %}
-                        
-                        <div class="col-md-4">
-                            <div class="card mb-4 product-wap rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
-                                </div>
-                                <div class="card-body">
-                                    <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-success text-decoration-none">{{ product.name }}</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    </ul>
-                                    <p class="card-text">{{ product.price }} Baht</p>
-                                </div>
 
-                                <div class="card-footer p-0 no-gutters">
-                                    {% if product.current_available_amount <= 0 %}
-                                        <h4 class="btn btn-block btn-warning" > Out of stock </h4>
+                            <div class="card-footer p-0 no-gutters">
+                                {% if product.current_available_amount <= 0 %}
+                                    <h4 class="btn btn-block btn-warning" > Out of stock </h4>
                                     {% else %}
                                         <h4 class="btn btn-block btn-success" > Available </h4>
                                     {% endif %}
-                                </div>
                             </div>
                         </div>
+                    </div>
                     {% endfor %}
-                </div>
             </div>
+
         </div>
     </div>
-    <!-- End Content -->  
+    <!-- End Content -->    
+
 {% endblock %}

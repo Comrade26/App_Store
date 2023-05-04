@@ -9,22 +9,25 @@ from django.contrib import messages
 from django.urls import reverse
 from .forms import VendorForm, ProductForm
 
+@login_required
 def vendor_item(request):
     vendors = Vendor.get_all_vendors()
     vendorID = request.GET.get("vendor")
-    categories = Category.get_all_categories()
-    categoryID = request.GET.get("category")
-    if categoryID:
-        products = Product.get_all_products_by_categoryid(categoryID)
+    if vendorID:
+        products = Product.get_all_products_by_vendorid(vendorID)
+        vendor = Vendor.objects.get(id=vendorID)
     else:
         products = Product.get_all_products()
+        vendor = None
 
-    vendor_category_product_map = {}
-    vendor_category_product_map["products"] = products
-    vendor_category_product_map["categories"] = categories
-    vendor_category_product_map["vendors"] = vendors
+    vendor_product_map = {}
+    vendor_product_map["products"] = products
+    vendor_product_map["vendors"] = vendors
+    vendor_product_map["vendor"] = vendor
+    vendor_product_map["vendorID"] = vendorID
 
-    return render(request, "my_products.html", vendor_category_product_map)
+    return render(request, "my_products.html", vendor_product_map)
+
 
 @login_required
 def vendor_register(request):
@@ -65,12 +68,10 @@ def add_edit_product(request, product_id=None):
 def delete_product(request, pk):
     product = Product.objects.get(id=pk)
 
-    # Check if the user is the vendor of the product
     if request.user.vendor != product.vendor:
         messages.error(request, "You are not authorized to delete this product.")
-        return redirect(f'/buyer/vendor_products/?vendor={request.user.vendor.id}')
+        return redirect(f'/vendor/my_products/?vendor={request.user.vendor.id}')
 
-    # Delete the product and redirect to the vendor's products page
     product.delete()
     messages.success(request, "Product has been deleted successfully.")
-    return redirect(f'/buyer/vendor_products/?vendor={request.user.vendor.id}')
+    return redirect(f'/vendor/my_products/?vendor={request.user.vendor.id}')
