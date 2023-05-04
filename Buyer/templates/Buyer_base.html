@@ -126,9 +126,21 @@
                 </button>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="/profile/">My profile</a>
-                  <a class="dropdown-item" href="vendor_products.html">My shop</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/">Log Out</a>
+                  {% if user.is_authenticated %}
+                    {% if user.vendor %}
+                      <a class="dropdown-item" href="{% url 'Buyer:vendor_products' %}?vendor={{ user.vendor.id }}">My Shop</a>
+                    {% else %}
+                      <a class="dropdown-item" href="{% url 'vendor:vendor_register' %}">Open Shop</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    <form id="logout-form" method="post" action="{% url 'Core:logout' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="next" value="/">
+                      <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();">Log Out</a>
+                    </form>
+                  {% else %}
+                    <a class="dropdown-item" href="{% url 'Core:login' %}">Log In</a>
+                  {% endif %}                
                 </div>
               </div>
 

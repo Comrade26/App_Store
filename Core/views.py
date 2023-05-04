@@ -1,5 +1,6 @@
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.shortcuts import render, redirect
@@ -40,3 +41,7 @@ class ChangePasswordView(PasswordChangeView):
     def form_valid(self, form):
         messages.success(self.request, 'Your password has been changed.')
         return super().form_valid(form)
+
+def my_logout_view(request):
+    logout(request)
+    return redirect('/')
