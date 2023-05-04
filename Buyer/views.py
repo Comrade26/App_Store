@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from Vendor.models import Product, Category, Vendor
+from Buyer.models import Order
+# from Core.models import User
 from django.views import View
 from django.urls import reverse
 
@@ -145,3 +148,28 @@ def search(request):
     data=Product.objects.filter(name__icontains=q)
     return render(request, 'search.html', {'data':data})
 
+@login_required
+def orderview(request ):
+    customer = request.user
+    orders = Order.get_orders_by_customer(customer)
+    print(orders)
+    return render(request , 'order.html'  , {'orders' : orders})
+    
+@login_required
+def checkout(request):
+    customer = request.user
+    print(customer)
+    cart = request.session.get('cart')
+    products = Product.get_products_by_id(list(cart.keys()))
+    print(customer, cart, products)
+
+    for product in products:
+        print(cart.get(str(product.id)))
+        order = Order(customer=customer,
+                        product=product,
+                        price=product.price,
+                        quantity=cart.get(str(product.id)))
+        order.save()
+    request.session['cart'] = {}
+
+    return redirect('Buyer:order')

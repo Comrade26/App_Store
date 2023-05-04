@@ -75,7 +75,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow">
       <div class="container d-flex justify-content-between align-items-center">
 
-          <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+          <a class="navbar-brand text-success logo h1 align-self-center" >
             <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/3decb646439777.5857f57515b60.gif" 
             height="50">
               LongTao
@@ -125,7 +125,8 @@
                   <i class="bi bi-person-circle"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/profile/">My profile</a>
+                  <a class="dropdown-item" href="/profile/">My Profile</a>
+                  <a class="dropdown-item" href="{% url 'Buyer:order' %}">My Order</a>
                   {% if user.is_authenticated %}
                     {% if user.vendor %}
                       <a class="dropdown-item" href="{% url 'vendor:my_products' %}?vendor={{ user.vendor.id }}">My Shop</a>
@@ -152,9 +153,6 @@
 
     {% block content %}
 
-
-    
-    
     {% endblock %}
 
 
