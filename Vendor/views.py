@@ -3,10 +3,11 @@
 # Create your views here.
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Product, Vendor
 from django.contrib import messages
-from .forms import VendorForm
+from django.urls import reverse
+from .forms import VendorForm, ProductForm
 
 def vendor_item(request):
     vendors = Vendor.get_all_vendors()
@@ -38,3 +39,38 @@ def vendor_register(request):
     else:
         form = VendorForm()
     return render(request, 'vendor_registration.html', {'form': form})
+
+@login_required
+def add_edit_product(request, product_id=None):
+    vendor = request.user.vendor
+    if product_id:
+        product = get_object_or_404(Product, id=product_id, vendor=vendor)
+    else:
+        product = None
+    
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.vendor = request.user.vendor # set the current user as the vendor of the product
+            product.save()
+            return redirect(f'/buyer/vendor_products/?vendor={request.user.vendor.id}')
+
+    else:
+        form = ProductForm(instance=product)
+    
+    return render(request, 'add_edit_product.html', {'form': form})
+
+@login_required
+def delete_product(request, pk):
+    product = Product.objects.get(id=pk)
+
+    # Check if the user is the vendor of the product
+    if request.user.vendor != product.vendor:
+        messages.error(request, "You are not authorized to delete this product.")
+        return redirect(f'/buyer/vendor_products/?vendor={request.user.vendor.id}')
+
+    # Delete the product and redirect to the vendor's products page
+    product.delete()
+    messages.success(request, "Product has been deleted successfully.")
+    return redirect(f'/buyer/vendor_products/?vendor={request.user.vendor.id}')

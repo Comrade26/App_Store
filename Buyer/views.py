@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from Vendor.models import Product, Category, Vendor
 from django.views import View
 from django.urls import reverse
@@ -12,17 +13,22 @@ def item(request):
 
     return render(request, "single_products.html", product_map)
 
+@login_required
 def vendor_item(request):
     vendors = Vendor.get_all_vendors()
     vendorID = request.GET.get("vendor")
     if vendorID:
         products = Product.get_all_products_by_vendorid(vendorID)
+        vendor = Vendor.objects.get(id=vendorID)
     else:
         products = Product.get_all_products()
+        vendor = None
 
     vendor_product_map = {}
     vendor_product_map["products"] = products
     vendor_product_map["vendors"] = vendors
+    vendor_product_map["vendor"] = vendor
+    vendor_product_map["vendorID"] = vendorID
 
     return render(request, "vendor_products.html", vendor_product_map)
 
