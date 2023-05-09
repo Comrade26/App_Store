@@ -6,13 +6,22 @@
 </div>
 
 <div class="border rounded p-4 m-4">
-    <p>Username: {{ user.username }}</p>
-    <p>First Name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Telephone: {{ user.telephone }}</p>
-    <p>Address: {{ user.address }}</p>
-
+    <div class="border rounded p-4 m-4">
+        <p>Username: {{ user.username }}</p>
+        <p>First Name: {{ user.first_name }}</p>
+        <p>Last Name: {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Telephone: {{ user.telephone }}</p>
+        <p>Address: {{ user.address }}</p>
+    </div>
+    {% if vendor %}
+    <div class="border rounded p-4 m-4">
+        <p>Store name: {{ vendor.store_name }}</p>
+        <p>Location: {{ vendor.location }}</p>
+        <p>Store picture: {{ vendor.store_picture }}</p>
+        <p>Qr picture: {{ vendor.qr_picture }}</p>
+    </div>
+    {% endif %}
     <a href="{% url 'Core:edit_profile' %}" class="btn btn-outline-secondary">Edit Profile</a>
     <a href="{% url 'Core:change_password' %}" class="btn btn-outline-secondary">Change Password</a>
 </div>
