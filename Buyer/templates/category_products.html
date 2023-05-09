@@ -54,8 +54,8 @@
                                 
                                 <div class="card-footer p-0 no-gutters">
                                     {% if product.current_available_amount <= 0 %}
-                                        <h4 class="btn btn-block btn-warning" > Out of stock </h4>
-                                        {% else %}
+                                    <h4 class="btn btn-block btn-warning" > Out of stock </h4>
+                                    {% else %}
                                             {% if product|is_in_cart:request.session.cart %}
                                             <div class="row no-gutters">
                                                 <form action="/buyer/#{{product.id}}" class="col-2 " method="post">
@@ -80,6 +80,7 @@
                                             </form>
                                             {% endif %}
                                         {% endif %}
+                                        <a href="{% url 'Buyer:user_add_wishlist' product.id  %}" onclick='alert("Add product to favourite successfully")' class="text-center col btn btn-outline-info" role="button" >Add to Wish List</a>
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,41 @@
+{% extends "Buyer_base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">My Favourite</h1>            
+        </div>
+        
+        
+        {% if wishlist %}
+        {% for product in wishlist  %}
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mx-auto mb-3" id={{product.id}}>
+                        <div class="card rounded-3">
+                            <img class="card-img rounded-0 img-fluid" src="{{ product.image.url }}" alt="Card image cap">
+                            
+                        </div>
+                        <div class="card-body">
+                            <a href="/buyer/single_products/?product={{ product.id }}" class="h3 text-success text-decoration-none ">{{ product.name }}</a>
+                            
+                            <p class="card-text">{{ product.price }} Baht</p>
+                            <a type="button" class="text-center col btn btn-danger" href="{% url 'Buyer:user_remove_wishlist' product.id %}" >Remove from favourite</a>
+
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="card-text">No products have been added to your favourite yet</p>
+                {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

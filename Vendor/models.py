@@ -44,6 +44,7 @@ class Product(models.Model):
         category = models.ForeignKey(Category, on_delete=models.CASCADE) #Product Category
         created_at = models.DateTimeField(auto_now_add=True) #Product Created Date
         updated_at = models.DateTimeField(auto_now=True) #Product Updated Date
+        users_wishlist = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="user_wishlist", blank=True)
 
         @staticmethod
         def get_products_by_id(ids):
