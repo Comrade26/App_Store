@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from Vendor.models import Product, Category, Vendor
 from Buyer.models import Order
-# from Core.models import User
+from django.shortcuts import get_object_or_404
 from django.views import View
 from django.urls import reverse
 
@@ -173,3 +173,21 @@ def checkout(request):
     request.session['cart'] = {}
 
     return redirect('Buyer:order')
+
+@login_required
+def wishlist(request):
+    products = Product.objects.filter(users_wishlist=request.user)
+    return render(request, "user_wish_list.html", {"wishlist": products})
+
+@login_required
+def add_to_wishlist(request, id):
+    product = get_object_or_404(Product, id=id)
+    product.users_wishlist.add(request.user)
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+@login_required
+def remove_to_wishlist(request, id):
+    product = get_object_or_404(Product, id=id)
+    if product.users_wishlist.filter(id=request.user.id).exists():
+        product.users_wishlist.remove(request.user)
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
