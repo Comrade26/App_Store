@@ -8,7 +8,16 @@
 <div class="border rounded p-4 m-4">
     <form method="post" action="{% url 'Core:edit_profile' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <fieldset>
+            <legend>User Information</legend>
+            {{ user_form.as_p }}
+        </fieldset>
+        {% if user.vendor %}
+        <fieldset>
+            <legend>Vendor Information</legend>
+            {{ vendor_form.as_p }}
+        </fieldset>
+        {% endif %}
         <button type="submit" class="btn btn-outline-secondary" >Save Changes</button>
     </form>
 </div>
